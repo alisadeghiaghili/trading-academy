@@ -1,0 +1,53 @@
+"""Database package initialization."""
+
+from app.db.session import (
+    Base,
+    engine,
+    async_session_maker,
+    get_db,
+    get_db_context,
+    init_db,
+    close_db,
+)
+from app.db.models import (
+    User,
+    UserRole,
+    License,
+    LicenseStatus,
+    Module,
+    Lesson,
+    LessonType,
+    UserProgress,
+    QuizQuestion,
+    QuizAttempt,
+    PaperTrade,
+    TradeSide,
+    OrderType,
+    OrderStatus,
+    MarketData,
+)
+
+__all__ = [
+    "Base",
+    "engine",
+    "async_session_maker",
+    "get_db",
+    "get_db_context",
+    "init_db",
+    "close_db",
+    "User",
+    "UserRole",
+    "License",
+    "LicenseStatus",
+    "Module",
+    "Lesson",
+    "LessonType",
+    "UserProgress",
+    "QuizQuestion",
+    "QuizAttempt",
+    "PaperTrade",
+    "TradeSide",
+    "OrderType",
+    "OrderStatus",
+    "MarketData",
+]
