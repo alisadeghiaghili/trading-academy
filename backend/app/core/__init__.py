@@ -31,6 +31,19 @@ from app.core.coaching import (
     FeedbackType,
     FeedbackSeverity,
 )
+from app.core.websocket import (
+    ConnectionManager,
+    SubscriptionType,
+    get_connection_manager,
+    WSMessage,
+    TickerMessage,
+    OHLCVMessage,
+    OrderBookMessage,
+    TradeMessage,
+    SubscriptionMessage,
+    ErrorMessage,
+    HeartbeatMessage,
+)
 
 __all__ = [
     # Config
@@ -62,4 +75,16 @@ __all__ = [
     "CoachingFeedback",
     "FeedbackType",
     "FeedbackSeverity",
+    # WebSocket
+    "ConnectionManager",
+    "SubscriptionType",
+    "get_connection_manager",
+    "WSMessage",
+    "TickerMessage",
+    "OHLCVMessage",
+    "OrderBookMessage",
+    "TradeMessage",
+    "SubscriptionMessage",
+    "ErrorMessage",
+    "HeartbeatMessage",
 ]
