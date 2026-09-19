@@ -4,11 +4,11 @@ version = "0.1.0"
 description = "Shared trading analysis library for Trading Academy"
 readme = "README.md"
 requires-python = ">=3.11"
-license = {text = "Proprietary"}
-authors = [{name = "Your Company", email = "dev@yourcompany.com"}]
+license = {text = "Apache-2.0"}
+authors = [{name = "Ali Sadeghi Aghili", email = "ali@example.com"}]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: Other/Proprietary License",
+    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
