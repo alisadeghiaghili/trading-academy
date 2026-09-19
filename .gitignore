@@ -47,6 +47,7 @@ logs/
 # Environment
 .env
 .env.local
+backend/.env
 
 # OS
 .DS_Store
@@ -63,3 +64,12 @@ docs/_build/
 
 # Package
 *.egg-info/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Keys
+backend/keys/*.pem
+!backend/keys/*.pem.example

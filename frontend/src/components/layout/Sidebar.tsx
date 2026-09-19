@@ -7,6 +7,7 @@ import {
   Briefcase,
   PieChart,
   MessageSquare,
+  Trophy,
   Settings,
   ChevronLeft,
   ChevronRight,
@@ -22,6 +23,7 @@ const navItems = [
   { key: "portfolio", icon: Briefcase, path: "/portfolio" },
   { key: "analytics", icon: PieChart, path: "/analytics" },
   { key: "coaching", icon: MessageSquare, path: "/coaching" },
+  { key: "gamification", icon: Trophy, path: "/gamification" },
   { key: "settings", icon: Settings, path: "/settings" },
 ] as const;
 

@@ -302,6 +302,87 @@ class ApiClient {
     const { data } = await this.client.get("/health");
     return data;
   }
+
+  // Gamification
+  async getGamificationProfile() {
+    const { data } = await this.client.get("/gamification/profile");
+    return data;
+  }
+
+  async trackDailyLogin() {
+    const { data } = await this.client.post("/gamification/login/track");
+    return data;
+  }
+
+  async getXPHistory(limit = 20) {
+    const { data } = await this.client.get("/gamification/xp/history", { params: { limit } });
+    return data;
+  }
+
+  async getAllBadges() {
+    const { data } = await this.client.get("/gamification/badges");
+    return data;
+  }
+
+  async getDailyChallenges() {
+    const { data } = await this.client.get("/gamification/challenges");
+    return data;
+  }
+
+  async getLeaderboard(category = "xp", period = "weekly", limit = 50) {
+    const { data } = await this.client.get("/gamification/leaderboard", {
+      params: { category, period, limit },
+    });
+    return data;
+  }
+
+  async getTutorials(category?: string) {
+    const params = category ? { category } : {};
+    const { data } = await this.client.get("/gamification/tutorials", { params });
+    return data;
+  }
+
+  async getTutorial(tutorialId: string) {
+    const { data } = await this.client.get(`/gamification/tutorials/${tutorialId}`);
+    return data;
+  }
+
+  async completeTutorial(tutorialId: string) {
+    const { data } = await this.client.post(`/gamification/tutorials/${tutorialId}/complete`);
+    return data;
+  }
+
+  async getPatternGames(difficulty?: number) {
+    const params = difficulty ? { difficulty } : {};
+    const { data } = await this.client.get("/gamification/pattern-games", { params });
+    return data;
+  }
+
+  async getPatternGame(gameId: string) {
+    const { data } = await this.client.get(`/gamification/pattern-games/${gameId}`);
+    return data;
+  }
+
+  async submitPatternAnswer(gameId: string, answer: string, timeTaken = 0) {
+    const { data } = await this.client.post(
+      `/gamification/pattern-games/${gameId}/answer`,
+      null,
+      { params: { user_answer: answer, time_taken_seconds: timeTaken } }
+    );
+    return data;
+  }
+
+  async getEconomicCalendar(params?: { start_date?: string; end_date?: string; impact?: string }) {
+    const { data } = await this.client.get("/gamification/economic-calendar", { params });
+    return data;
+  }
+
+  async getNewsFeed(category?: string, limit = 30) {
+    const params: any = { limit };
+    if (category) params.category = category;
+    const { data } = await this.client.get("/gamification/news", { params });
+    return data;
+  }
 }
 
 export const api = new ApiClient();

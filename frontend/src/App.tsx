@@ -15,6 +15,7 @@ import { PortfolioPage } from "@/pages/PortfolioPage";
 import { AnalyticsPage } from "@/pages/AnalyticsPage";
 import { CoachingPage } from "@/pages/CoachingPage";
 import { SettingsPage } from "@/pages/SettingsPage";
+import { GamificationPage } from "@/pages/GamificationPage";
 import { PrivateRoute } from "@/components/auth/PrivateRoute";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 
@@ -63,6 +64,7 @@ export default function App() {
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/coaching" element={<CoachingPage />} />
+            <Route path="/gamification" element={<GamificationPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
         </Route>

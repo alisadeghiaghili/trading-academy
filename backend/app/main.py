@@ -24,6 +24,7 @@ from app.api.v1 import (
     market_data,
     health,
     websocket,
+    gamification,
 )
 from app.schemas import HealthResponse
 
@@ -187,6 +188,7 @@ app.include_router(quizzes.router, prefix=settings.API_V1_PREFIX)
 app.include_router(trades.router, prefix=settings.API_V1_PREFIX)
 app.include_router(market_data.router, prefix=settings.API_V1_PREFIX)
 app.include_router(websocket.router, prefix=settings.API_V1_PREFIX)
+app.include_router(gamification.router, prefix=settings.API_V1_PREFIX)
 
 
 # Root endpoint
