@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { AuthTokens } from "@/types";
-import { demoAdapter, isDemoMode } from "@/mocks/demoAdapter";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api/v1";
 
@@ -11,7 +10,6 @@ class ApiClient {
   constructor() {
     this.client = axios.create({
       baseURL: API_BASE_URL,
-      ...(isDemoMode() ? { adapter: demoAdapter } : {}),
       headers: {
         "Content-Type": "application/json",
       },
