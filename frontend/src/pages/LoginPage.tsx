@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Eye, EyeOff, LogIn, TrendingUp } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAppStore } from "@/store";
+import { isDemoMode, DEMO_EMAIL, DEMO_PASSWORD } from "@/mocks/demoAdapter";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -118,6 +119,13 @@ export function LoginPage() {
               )}
             </button>
           </form>
+
+          {isDemoMode() && (
+            <div className="mt-4 rounded-lg border border-primary-200 bg-primary-50 dark:border-primary-800 dark:bg-primary-950 px-3 py-2 text-xs text-surface-700 dark:text-surface-300">
+              Demo mode — use <span className="font-mono font-semibold">{DEMO_EMAIL}</span> /{" "}
+              <span className="font-mono font-semibold">{DEMO_PASSWORD}</span>
+            </div>
+          )}
 
           <div className="mt-6 text-center text-sm">
             <span className="text-surface-600 dark:text-surface-400">{t("auth.no_account")} </span>
