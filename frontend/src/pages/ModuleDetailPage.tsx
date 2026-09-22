@@ -31,7 +31,7 @@ export function ModuleDetailPage() {
         setCurrentModule(mod);
 
         // Fetch lessons with progress
-        const lessonsData = await api.getModuleLessons(moduleId);
+        const lessonsData = await api.getModuleLessons(moduleId!);
         setLessons(lessonsData);
       } catch (err: any) {
         setError(err.message);

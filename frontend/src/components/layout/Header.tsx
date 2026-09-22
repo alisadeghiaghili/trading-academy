@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Bell, Sun, Moon, Monitor, Globe, LogOut, User as UserIcon } from "lucide-react";
 import { useAppStore } from "@/store";
 import { useTheme } from "@/hooks/useApp";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "@/utils";
 
 export function Header() {
@@ -123,13 +124,13 @@ export function Header() {
           </button>
           {menuOpen && (
             <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-surface-800 rounded-lg shadow-lg border border-surface-200 dark:border-surface-700 py-1 z-50">
-              <a
-                href="/settings"
+              <Link
+                to="/settings"
                 className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-surface-100 dark:hover:bg-surface-700"
               >
                 <UserIcon className="h-4 w-4" />
                 {t("nav.profile")}
-              </a>
+              </Link>
               <button
                 onClick={() => logout()}
                 className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-surface-100 dark:hover:bg-surface-700"

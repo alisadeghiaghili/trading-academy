@@ -49,7 +49,8 @@ class ApiClient {
             return this.client(originalRequest);
           } catch (refreshError) {
             this.clearTokens();
-            window.location.href = "/login";
+            const appBase = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+            window.location.href = `${appBase}/login`;
             return Promise.reject(refreshError);
           }
         }

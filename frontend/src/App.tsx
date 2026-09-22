@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import { useAppStore } from "@/store";
@@ -19,6 +19,9 @@ import { GamificationPage } from "@/pages/GamificationPage";
 import { PrivateRoute } from "@/components/auth/PrivateRoute";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 
+// Trailing slash from Vite BASE_URL; react-router basename has none
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+
 export default function App() {
   const { fetchProfile, isAuthenticated } = useAppStore();
   useTheme();
@@ -29,7 +32,7 @@ export default function App() {
   }, [fetchProfile]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <Toaster
         position="top-right"
         toastOptions={{
@@ -83,9 +86,9 @@ function NotFoundPage() {
       <p className="text-xl text-surface-600 dark:text-surface-400 mt-4">
         Page not found
       </p>
-      <a href="/dashboard" className="btn-primary mt-6">
+      <Link to="/dashboard" className="btn-primary mt-6">
         Go to Dashboard
-      </a>
+      </Link>
     </div>
   );
 }

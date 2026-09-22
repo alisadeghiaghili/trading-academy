@@ -2,7 +2,11 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
+// GitHub Pages project site lives under /trading-academy/
+const base = process.env.VITE_BASE || "/";
+
 export default defineConfig({
+  base,
   plugins: [react()],
   resolve: {
     alias: {
@@ -25,7 +29,7 @@ export default defineConfig({
   build: {
     outDir: "dist",
     sourcemap: false,
-    minify: "terser",
+    minify: "esbuild",
     rollupOptions: {
       output: {
         manualChunks: {

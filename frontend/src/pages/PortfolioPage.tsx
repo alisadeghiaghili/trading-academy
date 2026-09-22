@@ -10,7 +10,8 @@ import {
 import { useAppStore } from "@/store";
 import { api } from "@/services/api";
 import { LoadingSpinner, ErrorMessage } from "@/components/common";
-import { TradingChart, formatCurrency, formatPercent, cn } from "@/utils";
+import { formatCurrency, formatPercent, cn } from "@/utils";
+import { TradingChart } from "@/components/charts/TradingChart";
 import { useWebSocket } from "@/hooks/useWebSocket";
 
 const API_WS_URL = import.meta.env.VITE_WS_URL || `ws://${window.location.host}/api/v1/ws/market-data`;

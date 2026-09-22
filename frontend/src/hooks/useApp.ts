@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAppStore } from "./store";
+import { useAppStore } from "@/store";
 
 export function useLocale() {
   const { locale, setLocale } = useAppStore();

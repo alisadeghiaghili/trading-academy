@@ -208,7 +208,7 @@
 
 /* Code blocks in lessons */
 .lesson-content pre {
-  @apply bg-surface-900 dark:bg-surface-950 text-surface-50 rounded-lg p-4 overflow-x-auto text-sm;
+  @apply bg-surface-900 dark:bg-surface-900 text-surface-50 rounded-lg p-4 overflow-x-auto text-sm;
 }
 
 .lesson-content code {
