@@ -9,23 +9,25 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
-from sqlalchemy.orm import DeclarativeBase
 
-from app.core.config import settings
+from app.db.base import Base
 
-
-class Base(DeclarativeBase):
-    """Base class for all database models."""
-    pass
+__all__ = ["Base", "engine", "async_session_maker", "get_db", "get_db_context", "init_db", "close_db"]
 
 
-engine: AsyncEngine = create_async_engine(
-    str(settings.DATABASE_URL),
-    pool_size=settings.DATABASE_POOL_SIZE,
-    max_overflow=settings.DATABASE_MAX_OVERFLOW,
-    echo=settings.DATABASE_ECHO,
-    future=True,
-)
+def _make_engine() -> AsyncEngine:
+    from app.core.config import settings
+
+    return create_async_engine(
+        str(settings.DATABASE_URL),
+        pool_size=settings.DATABASE_POOL_SIZE,
+        max_overflow=settings.DATABASE_MAX_OVERFLOW,
+        echo=settings.DATABASE_ECHO,
+        future=True,
+    )
+
+
+engine: AsyncEngine = _make_engine()
 
 async_session_maker = async_sessionmaker(
     engine,

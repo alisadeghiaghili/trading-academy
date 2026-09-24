@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from uuid import UUID
 
 from app.core.config import settings
@@ -66,7 +67,7 @@ async def login(
     db: AsyncSession = Depends(get_db),
 ) -> Token:
     """Login with email and password."""
-    result = await db.execute(select(User).where(User.email == form_data.username))
+    result = await db.execute(select(User).options(selectinload(User.licenses)).where(User.email == form_data.username))
     user = result.scalar_one_or_none()
 
     if not user or not verify_password(form_data.password, user.hashed_password):
@@ -130,7 +131,7 @@ async def refresh_token(
         )
 
     user_id = UUID(payload.sub)
-    result = await db.execute(select(User).where(User.id == user_id))
+    result = await db.execute(select(User).options(selectinload(User.licenses)).where(User.id == user_id))
     user = result.scalar_one_or_none()
 
     if not user or not user.is_active:
@@ -168,35 +169,6 @@ async def logout() -> dict:
     return {"message": "Successfully logged out"}
 
 
-@router.get("/me", response_model=UserWithLicense)
-async def get_current_user(
-    current_user: User = Depends(get_current_user_dependency),
-) -> UserWithLicense:
-    """Get current user profile with license info."""
-    license_manager = get_license_manager()
-    license_tier = None
-    license_status = None
-    license_expires_at = None
-    features = []
-
-    for license_obj in current_user.licenses:
-        valid, _ = license_manager.validate_license(license_obj)
-        if valid:
-            license_tier = license_obj.tier.value
-            license_status = license_obj.status.value
-            license_expires_at = license_obj.expires_at
-            features = license_obj.metadata.get("features", [])
-            break
-
-    return UserWithLicense(
-        **UserResponse.model_validate(current_user).model_dump(),
-        license_tier=license_tier,
-        license_status=license_status,
-        license_expires_at=license_expires_at,
-        features=features,
-    )
-
-
 # Dependency for getting current user
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -224,10 +196,39 @@ async def get_current_user_dependency(
     except (JWTError, ValueError):
         raise credentials_exception
 
-    result = await db.execute(select(User).where(User.id == user_id))
+    result = await db.execute(select(User).options(selectinload(User.licenses)).where(User.id == user_id))
     user = result.scalar_one_or_none()
 
     if user is None:
         raise credentials_exception
 
     return user
+
+
+@router.get("/me", response_model=UserWithLicense)
+async def get_current_user(
+    current_user: User = Depends(get_current_user_dependency),
+) -> UserWithLicense:
+    """Get current user profile with license info."""
+    license_manager = get_license_manager()
+    license_tier = None
+    license_status = None
+    license_expires_at = None
+    features = []
+
+    for license_obj in current_user.licenses:
+        valid, _ = license_manager.validate_license(license_obj)
+        if valid:
+            license_tier = license_obj.tier.value
+            license_status = license_obj.status.value
+            license_expires_at = license_obj.expires_at
+            features = license_obj.extra.get("features", [])
+            break
+
+    return UserWithLicense(
+        **UserResponse.model_validate(current_user).model_dump(),
+        license_tier=license_tier,
+        license_status=license_status,
+        license_expires_at=license_expires_at,
+        features=features,
+    )

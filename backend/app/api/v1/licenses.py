@@ -49,7 +49,7 @@ async def validate_license(
     return LicenseValidationResponse(
         valid=True,
         tier=license_obj.tier.value,
-        features=license_obj.metadata.get("features", []),
+        features=license_obj.extra.get("features", []),
         expires_at=license_obj.expires_at,
     )
 

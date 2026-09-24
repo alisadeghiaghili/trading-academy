@@ -122,7 +122,7 @@ class LicenseManager:
             tier=tier,
             status=LicenseStatus.ACTIVE,
             expires_at=expires_at,
-            metadata={
+            extra={
                 "features": get_features_for_tier(tier.value),
                 "issued_by": "system",
             },
@@ -208,7 +208,7 @@ class LicenseManager:
         if not valid:
             return False
 
-        features = license_obj.metadata.get("features", [])
+        features = license_obj.extra.get("features", [])
         return "all" in features or feature in features
 
     def revoke_license(self, license_obj: License, reason: str = "revoked") -> License:
@@ -223,7 +223,7 @@ class LicenseManager:
         """
         license_obj.status = LicenseStatus.REVOKED
         license_obj.revoked_at = datetime.now(timezone.utc)
-        license_obj.metadata["revocation_reason"] = reason
+        license_obj.extra["revocation_reason"] = reason
         return license_obj
 
     def renew_license(self, license_obj: License, additional_days: int) -> License:
@@ -242,7 +242,7 @@ class LicenseManager:
             license_obj.expires_at = datetime.now(timezone.utc) + timedelta(days=additional_days)
 
         license_obj.status = LicenseStatus.ACTIVE
-        license_obj.metadata["last_renewal"] = datetime.now(timezone.utc).isoformat()
+        license_obj.extra["last_renewal"] = datetime.now(timezone.utc).isoformat()
         return license_obj
 
 

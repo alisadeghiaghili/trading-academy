@@ -1,7 +1,7 @@
 """Pydantic schemas for API requests and responses."""
 
 from datetime import datetime
-from typing import Optional, List, Any
+from typing import Optional, List, Any, Generic, TypeVar
 from uuid import UUID
 
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
@@ -317,15 +317,18 @@ class PageParams(BaseSchema):
     page_size: int = Field(20, ge=1, le=100)
 
 
-class PaginatedResponse(BaseSchema):
-    items: List[Any]
+T = TypeVar("T")
+
+
+class PaginatedResponse(BaseSchema, Generic[T]):
+    items: List[T]
     total: int
     page: int
     page_size: int
     total_pages: int
 
     @classmethod
-    def create(cls, items: List[Any], total: int, params: PageParams) -> "PaginatedResponse":
+    def create(cls, items: List[T], total: int, params: PageParams) -> "PaginatedResponse[T]":
         return cls(
             items=items,
             total=total,

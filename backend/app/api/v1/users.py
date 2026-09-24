@@ -32,7 +32,7 @@ async def get_me(
             license_tier = license_obj.tier.value
             license_status = license_obj.status.value
             license_expires_at = license_obj.expires_at
-            features = license_obj.metadata.get("features", [])
+            features = license_obj.extra.get("features", [])
             break
 
     return UserWithLicense(
@@ -142,7 +142,7 @@ async def get_user(
             license_tier = license_obj.tier.value
             license_status = license_obj.status.value
             license_expires_at = license_obj.expires_at
-            features = license_obj.metadata.get("features", [])
+            features = license_obj.extra.get("features", [])
             break
 
     return UserWithLicense(
